@@ -1,0 +1,13 @@
+{
+    "compilerOptions": {
+        "target": "es5",
+        "module": "system"
+    },
+    "files": [
+        "main.ts",
+        "atlas.ts",
+        "render-ctx2d.ts",
+        "render-webgl.ts",
+        "xml2json.ts"
+    ]
+}
