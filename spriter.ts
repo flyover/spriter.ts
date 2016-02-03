@@ -887,13 +887,13 @@ export class MainlineKeyframe extends Keyframe {
     json.bone_ref.forEach(function(bone_ref_json) {
       mainline_keyframe.bone_ref_array.push(new BoneRef().load(bone_ref_json));
     });
-    mainline_keyframe.bone_ref_array = mainline_keyframe.bone_ref_array.sort(function(a, b) { return a.id - b.id; });
+    mainline_keyframe.bone_ref_array.sort(function(a, b) { return a.id - b.id; });
     mainline_keyframe.object_ref_array = [];
     json.object_ref = makeArray(json.object_ref);
     json.object_ref.forEach(function(object_ref_json) {
       mainline_keyframe.object_ref_array.push(new ObjectRef().load(object_ref_json));
     });
-    mainline_keyframe.object_ref_array = mainline_keyframe.object_ref_array.sort(function(a, b) { return a.id - b.id; });
+    mainline_keyframe.object_ref_array.sort(function(a, b) { return a.id - b.id; });
     return mainline_keyframe;
   }
 }
@@ -907,7 +907,7 @@ export class Mainline {
     json.key.forEach(function(key_json) {
       mainline.keyframe_array.push(new MainlineKeyframe().load(key_json));
     });
-    mainline.keyframe_array = mainline.keyframe_array.sort(Keyframe.compare);
+    mainline.keyframe_array.sort(Keyframe.compare);
     return mainline;
   }
 }
@@ -1173,7 +1173,7 @@ export class Timeline extends Element {
       console.log("TODO: Timeline::load", timeline.type, json.key);
       break;
     }
-    timeline.keyframe_array = timeline.keyframe_array.sort(Keyframe.compare);
+    timeline.keyframe_array.sort(Keyframe.compare);
     if (json.meta) {
       timeline.meta = new Meta().load(json.meta);
     }
@@ -1201,7 +1201,7 @@ export class Soundline extends Element {
     json.key.forEach(function(key_json) {
       soundline.keyframe_array.push(new SoundlineKeyframe().load(key_json));
     });
-    soundline.keyframe_array = soundline.keyframe_array.sort(Keyframe.compare);
+    soundline.keyframe_array.sort(Keyframe.compare);
     return this;
   }
 }
@@ -1225,7 +1225,7 @@ export class Eventline extends Element {
     json.key.forEach(function(key_json) {
       eventline.keyframe_array.push(new EventlineKeyframe().load(key_json));
     });
-    eventline.keyframe_array = eventline.keyframe_array.sort(Keyframe.compare);
+    eventline.keyframe_array.sort(Keyframe.compare);
     return this;
   }
 }
@@ -2083,7 +2083,7 @@ export class Pose {
               const tag_def = pose.data.tag_def_array[tag.tag_def_index];
               pose.tag_array.push(tag_def.name);
             });
-            pose.tag_array = pose.tag_array.sort();
+            pose.tag_array.sort();
             // console.log(prev_time, tag_keyframe.time, time, "tag", pose.tag_array);
           };
 

@@ -973,13 +973,13 @@ System.register([], function(exports_1) {
                     json.bone_ref.forEach(function (bone_ref_json) {
                         mainline_keyframe.bone_ref_array.push(new BoneRef().load(bone_ref_json));
                     });
-                    mainline_keyframe.bone_ref_array = mainline_keyframe.bone_ref_array.sort(function (a, b) { return a.id - b.id; });
+                    mainline_keyframe.bone_ref_array.sort(function (a, b) { return a.id - b.id; });
                     mainline_keyframe.object_ref_array = [];
                     json.object_ref = makeArray(json.object_ref);
                     json.object_ref.forEach(function (object_ref_json) {
                         mainline_keyframe.object_ref_array.push(new ObjectRef().load(object_ref_json));
                     });
-                    mainline_keyframe.object_ref_array = mainline_keyframe.object_ref_array.sort(function (a, b) { return a.id - b.id; });
+                    mainline_keyframe.object_ref_array.sort(function (a, b) { return a.id - b.id; });
                     return mainline_keyframe;
                 };
                 return MainlineKeyframe;
@@ -995,7 +995,7 @@ System.register([], function(exports_1) {
                     json.key.forEach(function (key_json) {
                         mainline.keyframe_array.push(new MainlineKeyframe().load(key_json));
                     });
-                    mainline.keyframe_array = mainline.keyframe_array.sort(Keyframe.compare);
+                    mainline.keyframe_array.sort(Keyframe.compare);
                     return mainline;
                 };
                 return Mainline;
@@ -1301,7 +1301,7 @@ System.register([], function(exports_1) {
                             console.log("TODO: Timeline::load", timeline.type, json.key);
                             break;
                     }
-                    timeline.keyframe_array = timeline.keyframe_array.sort(Keyframe.compare);
+                    timeline.keyframe_array.sort(Keyframe.compare);
                     if (json.meta) {
                         timeline.meta = new Meta().load(json.meta);
                     }
@@ -1337,7 +1337,7 @@ System.register([], function(exports_1) {
                     json.key.forEach(function (key_json) {
                         soundline.keyframe_array.push(new SoundlineKeyframe().load(key_json));
                     });
-                    soundline.keyframe_array = soundline.keyframe_array.sort(Keyframe.compare);
+                    soundline.keyframe_array.sort(Keyframe.compare);
                     return this;
                 };
                 return Soundline;
@@ -1368,7 +1368,7 @@ System.register([], function(exports_1) {
                     json.key.forEach(function (key_json) {
                         eventline.keyframe_array.push(new EventlineKeyframe().load(key_json));
                     });
-                    eventline.keyframe_array = eventline.keyframe_array.sort(Keyframe.compare);
+                    eventline.keyframe_array.sort(Keyframe.compare);
                     return this;
                 };
                 return Eventline;
@@ -1846,18 +1846,18 @@ System.register([], function(exports_1) {
                         if (mainline_time2 < mainline_time1) {
                             mainline_time2 = anim.length;
                         }
-                        var mainline_time = time;
+                        var mainline_time_1 = time;
                         if (mainline_time1 !== mainline_time2) {
                             var mainline_tween = (time - mainline_time1) / (mainline_time2 - mainline_time1);
                             mainline_tween = mainline_keyframe1.curve.evaluate(mainline_tween);
-                            mainline_time = tween(mainline_time1, mainline_time2, mainline_tween);
+                            mainline_time_1 = tween(mainline_time1, mainline_time2, mainline_tween);
                         }
-                        var timeline_array = anim.timeline_array;
+                        var timeline_array_1 = anim.timeline_array;
                         var data_bone_array = mainline_keyframe1.bone_ref_array;
-                        var pose_bone_array = pose.bone_array;
+                        var pose_bone_array_1 = pose.bone_array;
                         data_bone_array.forEach(function (data_bone, bone_index) {
                             var timeline_index = data_bone.timeline_index;
-                            var timeline = timeline_array[timeline_index];
+                            var timeline = timeline_array_1[timeline_index];
                             var timeline_keyframe_array = timeline.keyframe_array;
                             var keyframe_index1 = data_bone.keyframe_index;
                             var keyframe_index2 = (keyframe_index1 + 1) % timeline_keyframe_array.length;
@@ -1870,19 +1870,19 @@ System.register([], function(exports_1) {
                             }
                             var pct = 0.0;
                             if (time1 !== time2) {
-                                pct = (mainline_time - time1) / (time2 - time1);
+                                pct = (mainline_time_1 - time1) / (time2 - time1);
                                 pct = timeline_keyframe1.curve.evaluate(pct);
                             }
-                            var pose_bone = (pose_bone_array[bone_index] = (pose_bone_array[bone_index] || new Bone()));
+                            var pose_bone = (pose_bone_array_1[bone_index] = (pose_bone_array_1[bone_index] || new Bone()));
                             var bone_timeline_keyframe1 = timeline_keyframe1;
                             var bone_timeline_keyframe2 = timeline_keyframe2;
                             pose_bone.copy(bone_timeline_keyframe1.bone).tween(bone_timeline_keyframe2.bone, pct, timeline_keyframe1.spin);
                             pose_bone.name = timeline.name;
                             pose_bone.parent_index = data_bone.parent_index;
                         });
-                        pose_bone_array.length = data_bone_array.length;
-                        pose_bone_array.forEach(function (bone) {
-                            var parent_bone = pose_bone_array[bone.parent_index];
+                        pose_bone_array_1.length = data_bone_array.length;
+                        pose_bone_array_1.forEach(function (bone) {
+                            var parent_bone = pose_bone_array_1[bone.parent_index];
                             if (parent_bone) {
                                 Space.combine(parent_bone.world_space, bone.local_space, bone.world_space);
                             }
@@ -1891,10 +1891,10 @@ System.register([], function(exports_1) {
                             }
                         });
                         var data_object_array = mainline_keyframe1.object_ref_array;
-                        var pose_object_array = pose.object_array;
+                        var pose_object_array_1 = pose.object_array;
                         data_object_array.forEach(function (data_object, object_index) {
                             var timeline_index = data_object.timeline_index;
-                            var timeline = timeline_array[timeline_index];
+                            var timeline = timeline_array_1[timeline_index];
                             var timeline_keyframe_array = timeline.keyframe_array;
                             var keyframe_index1 = data_object.keyframe_index;
                             var keyframe_index2 = (keyframe_index1 + 1) % timeline_keyframe_array.length;
@@ -1907,12 +1907,12 @@ System.register([], function(exports_1) {
                             }
                             var pct = 0.0;
                             if (time1 !== time2) {
-                                pct = (mainline_time - time1) / (time2 - time1);
+                                pct = (mainline_time_1 - time1) / (time2 - time1);
                                 pct = timeline_keyframe1.curve.evaluate(pct);
                             }
                             switch (timeline.type) {
                                 case 'sprite':
-                                    var pose_sprite = (pose_object_array[object_index] = (pose_object_array[object_index] || new SpriteObject()));
+                                    var pose_sprite = (pose_object_array_1[object_index] = (pose_object_array_1[object_index] || new SpriteObject()));
                                     var sprite_timeline_keyframe1 = timeline_keyframe1;
                                     var sprite_timeline_keyframe2 = timeline_keyframe2;
                                     pose_sprite.copy(sprite_timeline_keyframe1.sprite).tween(sprite_timeline_keyframe2.sprite, pct, timeline_keyframe1.spin);
@@ -1920,7 +1920,7 @@ System.register([], function(exports_1) {
                                     pose_sprite.parent_index = data_object.parent_index;
                                     break;
                                 case 'bone':
-                                    var pose_bone = (pose_object_array[object_index] = (pose_object_array[object_index] || new Bone()));
+                                    var pose_bone = (pose_object_array_1[object_index] = (pose_object_array_1[object_index] || new Bone()));
                                     var bone_timeline_keyframe1 = timeline_keyframe1;
                                     var bone_timeline_keyframe2 = timeline_keyframe2;
                                     pose_bone.copy(bone_timeline_keyframe1.bone).tween(bone_timeline_keyframe2.bone, pct, timeline_keyframe1.spin);
@@ -1928,7 +1928,7 @@ System.register([], function(exports_1) {
                                     pose_bone.parent_index = data_object.parent_index;
                                     break;
                                 case 'box':
-                                    var pose_box = (pose_object_array[object_index] = (pose_object_array[object_index] || new BoxObject()));
+                                    var pose_box = (pose_object_array_1[object_index] = (pose_object_array_1[object_index] || new BoxObject()));
                                     var box_timeline_keyframe1 = timeline_keyframe1;
                                     var box_timeline_keyframe2 = timeline_keyframe2;
                                     pose_box.copy(box_timeline_keyframe1.box).tween(box_timeline_keyframe2.box, pct, timeline_keyframe1.spin);
@@ -1936,7 +1936,7 @@ System.register([], function(exports_1) {
                                     pose_box.parent_index = data_object.parent_index;
                                     break;
                                 case 'point':
-                                    var pose_point = (pose_object_array[object_index] = (pose_object_array[object_index] || new PointObject()));
+                                    var pose_point = (pose_object_array_1[object_index] = (pose_object_array_1[object_index] || new PointObject()));
                                     var point_timeline_keyframe1 = timeline_keyframe1;
                                     var point_timeline_keyframe2 = timeline_keyframe2;
                                     pose_point.copy(point_timeline_keyframe1.point).tween(point_timeline_keyframe2.point, pct, timeline_keyframe1.spin);
@@ -1944,14 +1944,14 @@ System.register([], function(exports_1) {
                                     pose_point.parent_index = data_object.parent_index;
                                     break;
                                 case 'sound':
-                                    var pose_sound = (pose_object_array[object_index] = (pose_object_array[object_index] || new SoundObject()));
+                                    var pose_sound = (pose_object_array_1[object_index] = (pose_object_array_1[object_index] || new SoundObject()));
                                     var sound_timeline_keyframe1 = timeline_keyframe1;
                                     var sound_timeline_keyframe2 = timeline_keyframe2;
                                     pose_sound.copy(sound_timeline_keyframe1.sound).tween(sound_timeline_keyframe2.sound, pct, timeline_keyframe1.spin);
                                     pose_sound.name = timeline.name;
                                     break;
                                 case 'entity':
-                                    var pose_entity = (pose_object_array[object_index] = (pose_object_array[object_index] || new EntityObject()));
+                                    var pose_entity = (pose_object_array_1[object_index] = (pose_object_array_1[object_index] || new EntityObject()));
                                     var entity_timeline_keyframe1 = timeline_keyframe1;
                                     var entity_timeline_keyframe2 = timeline_keyframe2;
                                     pose_entity.copy(entity_timeline_keyframe1.entity).tween(entity_timeline_keyframe2.entity, pct, timeline_keyframe1.spin);
@@ -1959,7 +1959,7 @@ System.register([], function(exports_1) {
                                     pose_entity.parent_index = data_object.parent_index;
                                     break;
                                 case 'variable':
-                                    var pose_variable = (pose_object_array[object_index] = (pose_object_array[object_index] || new VariableObject()));
+                                    var pose_variable = (pose_object_array_1[object_index] = (pose_object_array_1[object_index] || new VariableObject()));
                                     var variable_timeline_keyframe1 = timeline_keyframe1;
                                     var variable_timeline_keyframe2 = timeline_keyframe2;
                                     pose_variable.name = timeline.name;
@@ -1969,12 +1969,12 @@ System.register([], function(exports_1) {
                                     throw new Error(timeline.type);
                             }
                         });
-                        pose_object_array.length = data_object_array.length;
+                        pose_object_array_1.length = data_object_array.length;
                         pose.character_map_key_array.forEach(function (character_map_key) {
                             var character_map = entity.character_map_map[character_map_key];
                             if (character_map) {
                                 character_map.map_instruction_array.forEach(function (map_instruction) {
-                                    pose_object_array.forEach(function (object) {
+                                    pose_object_array_1.forEach(function (object) {
                                         switch (object.type) {
                                             case 'sprite':
                                                 var sprite_object = object;
@@ -1998,11 +1998,11 @@ System.register([], function(exports_1) {
                                 });
                             }
                         });
-                        pose_object_array.forEach(function (object) {
+                        pose_object_array_1.forEach(function (object) {
                             switch (object.type) {
                                 case 'sprite':
                                     var sprite_object = object;
-                                    var bone = pose_bone_array[sprite_object.parent_index];
+                                    var bone = pose_bone_array_1[sprite_object.parent_index];
                                     if (bone) {
                                         Space.combine(bone.world_space, sprite_object.local_space, sprite_object.world_space);
                                     }
@@ -2020,7 +2020,7 @@ System.register([], function(exports_1) {
                                     break;
                                 case 'bone': {
                                     var bone_object = object;
-                                    var bone_1 = pose_bone_array[bone_object.parent_index];
+                                    var bone_1 = pose_bone_array_1[bone_object.parent_index];
                                     if (bone_1) {
                                         Space.combine(bone_1.world_space, bone_object.local_space, bone_object.world_space);
                                     }
@@ -2031,7 +2031,7 @@ System.register([], function(exports_1) {
                                 }
                                 case 'box': {
                                     var box_object = object;
-                                    var bone_2 = pose_bone_array[box_object.parent_index];
+                                    var bone_2 = pose_bone_array_1[box_object.parent_index];
                                     if (bone_2) {
                                         Space.combine(bone_2.world_space, box_object.local_space, box_object.world_space);
                                     }
@@ -2049,7 +2049,7 @@ System.register([], function(exports_1) {
                                 }
                                 case 'point': {
                                     var point_object = object;
-                                    var bone_3 = pose_bone_array[point_object.parent_index];
+                                    var bone_3 = pose_bone_array_1[point_object.parent_index];
                                     if (bone_3) {
                                         Space.combine(bone_3.world_space, point_object.local_space, point_object.world_space);
                                     }
@@ -2062,7 +2062,7 @@ System.register([], function(exports_1) {
                                     break;
                                 case 'entity': {
                                     var entity_object = object;
-                                    var bone_4 = pose_bone_array[entity_object.parent_index];
+                                    var bone_4 = pose_bone_array_1[entity_object.parent_index];
                                     if (bone_4) {
                                         Space.combine(bone_4.world_space, entity_object.local_space, entity_object.world_space);
                                     }
@@ -2077,7 +2077,7 @@ System.register([], function(exports_1) {
                                     throw new Error(object.type);
                             }
                         });
-                        pose_object_array.forEach(function (object) {
+                        pose_object_array_1.forEach(function (object) {
                             switch (object.type) {
                                 case 'entity':
                                     var entity_object = object;
@@ -2188,27 +2188,27 @@ System.register([], function(exports_1) {
                         });
                         if (anim.meta) {
                             if (anim.meta.tagline) {
-                                var add_tag = function (tag_keyframe) {
+                                var add_tag_1 = function (tag_keyframe) {
                                     pose.tag_array = [];
                                     tag_keyframe.tag_array.forEach(function (tag) {
                                         var tag_def = pose.data.tag_def_array[tag.tag_def_index];
                                         pose.tag_array.push(tag_def.name);
                                     });
-                                    pose.tag_array = pose.tag_array.sort();
+                                    pose.tag_array.sort();
                                 };
                                 if (elapsed_time < 0) {
                                     if (wrapped_min) {
                                         anim.meta.tagline.keyframe_array.forEach(function (tag_keyframe) {
                                             if (((anim.min_time <= tag_keyframe.time) && (tag_keyframe.time < prev_time)) ||
                                                 ((time <= tag_keyframe.time) && (tag_keyframe.time <= anim.max_time))) {
-                                                add_tag(tag_keyframe);
+                                                add_tag_1(tag_keyframe);
                                             }
                                         });
                                     }
                                     else {
                                         anim.meta.tagline.keyframe_array.forEach(function (tag_keyframe) {
                                             if ((time <= tag_keyframe.time) && (tag_keyframe.time < prev_time)) {
-                                                add_tag(tag_keyframe);
+                                                add_tag_1(tag_keyframe);
                                             }
                                         });
                                     }
@@ -2218,14 +2218,14 @@ System.register([], function(exports_1) {
                                         anim.meta.tagline.keyframe_array.forEach(function (tag_keyframe) {
                                             if (((anim.min_time <= tag_keyframe.time) && (tag_keyframe.time <= time)) ||
                                                 ((prev_time < tag_keyframe.time) && (tag_keyframe.time <= anim.max_time))) {
-                                                add_tag(tag_keyframe);
+                                                add_tag_1(tag_keyframe);
                                             }
                                         });
                                     }
                                     else {
                                         anim.meta.tagline.keyframe_array.forEach(function (tag_keyframe) {
                                             if ((prev_time < tag_keyframe.time) && (tag_keyframe.time <= time)) {
-                                                add_tag(tag_keyframe);
+                                                add_tag_1(tag_keyframe);
                                             }
                                         });
                                     }
