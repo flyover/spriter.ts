@@ -626,7 +626,9 @@ export class SpriteObject extends BaseObject {
   }
   tween(other, pct, spin): void {
     Space.tween(this.local_space, other.local_space, pct, spin, this.local_space);
-    // Vector.tween(this.pivot, other.pivot, pct, this.pivot);
+    if (!this.default_pivot) {
+      Vector.tween(this.pivot, other.pivot, pct, this.pivot);
+    }
     this.alpha = tween(this.alpha, other.alpha, pct);
   }
 }
@@ -1865,8 +1867,9 @@ export class Pose {
           const file = folder && folder.file_array[sprite_object.file_index];
           if (file) {
             const image_file = <ImageFile>file;
-            const offset_x = (0.5 - sprite_object.pivot.x) * image_file.width;
-            const offset_y = (0.5 - sprite_object.pivot.y) * image_file.height;
+            const pivot = (sprite_object.default_pivot) ? image_file.pivot : sprite_object.pivot;
+            const offset_x = (0.5 - pivot.x) * image_file.width;
+            const offset_y = (0.5 - pivot.y) * image_file.height;
             Space.translate(sprite_object.world_space, offset_x, offset_y);
           }
           break;
